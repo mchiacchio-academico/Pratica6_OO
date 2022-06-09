@@ -29,7 +29,7 @@ public class ConexaoPostgre {
 	            } else {
 	                System.out.println("Failed to make connection!");
 	            }
-	            //vers�o do postgreeSQL
+	            //versão do postgreeSQL
 	            Statement statement = conn.createStatement();
 	            ResultSet resultSet = statement.executeQuery("SELECT VERSION()");
 	            if (resultSet.next()) {
@@ -171,10 +171,42 @@ public class ConexaoPostgre {
 	        	app.todosclientes();
 	        	break;
 	        case 3:
-	        
-	        	break;
-	        }
-	    }
-	        while(opcao!=4);
-	    }
-	}
+		        	
+		        	String nm_cliente = "";
+		        	int id_cliente = 0;
+		        	
+		        	System.out.println("\nDigite o nome: ");
+		        	nm_cliente = ler.next();
+		        	System.out.println("\nDigite o id: ");
+		        	id_cliente = ler.nextInt();
+		        	
+		        	String sql = "";
+		        	
+		        	if (id_cliente != 0) {
+		        	sql = ("select a.nm_cliente, b.id_cliente, b.dt_pedido, b.vl_total_pago from cliente a inner join pedido b on a.id_cliente = b.id_cliente where b.id_cliente = " + id_cliente);
+		        	}
+		        	else if  (nm_cliente != "") {
+		        	sql = ("select a.nm_cliente, b.id_cliente, b.dt_pedido, b.vl_total_pago from cliente a inner join pedido b on a.id_cliente = b.id_cliente where a.nm_cliente like '%" + nm_cliente + "%'");
+		        	}
+		        	else {
+		        		System.out.println("Cadastro não encontrado.");
+		        	}
+		        	
+		        	app.pedidosCliente(sql);
+		        	
+		        	break;
+		        	
+		        case 4:
+		        	System.out.println("Programa finalizado");
+		        break;		        	
+
+		        default:
+		        	System.out.println("Comando inválido. Tente novamente.");
+		        
+		        }	        
+		    }
+		        
+		        while (menu <=3) ; 
+
+		    }
+}
